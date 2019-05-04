@@ -1,4 +1,7 @@
-const dragging = (elem, container = document.body) => {
+const dragging = (elemId, container = document.body) => {
+  // Dom elements selection
+  let elem = document.getElementById(elemId);
+
   // *********************************************************
   // **************** get & set position *********************
   // *********************************************************
