@@ -1,33 +1,54 @@
 // This is a module for drag and drop SVG elements
+const dragSVG = elemId => {
+  const getSVGdim = SVGid => {
+    let svg = document.getElementById(SVGid);
+    let svgH = svg.height.animVal.value;
+    let svgW = svg.width.animVal.value;
+    return [svgH, svgW];
+  };
 
-const getSVGdim = SVGid => {
-  let svg = document.getElementById(SVGid);
-  //   let svgH = svg.getAttribute("height");
-  //   let svgW = svg.getAttribute("width");
-  let svgH = svg.height.animVal.value;
-  let svgW = svg.width.animVal.value;
+  let elem = document.getElementById(elemId);
 
-  //   let svgH = svg.height[0].animVal.value;
-  //   let svgW = svg.width[0].animVal.value;
-  return [svgH, svgW];
-};
+  let dim = getSVGdim("svg");
 
-let cir = document.getElementById("circle");
-let rec = document.getElementById("rect");
-let dim = getSVGdim("svg");
+  let deltaX = 0;
+  let deltaY = 0;
+  let elemDragged;
 
-const coord = e => {
-  let cursX = e.pageX;
-  let cursY = e.pageY;
-  let elemX = e.target.x ? e.target.x.animVal.value : e.target.cx.animVal.value;
-  let elemY = e.target.y ? e.target.y.animVal.value : e.target.cy.animVal.value;
-  return [cursX, cursY, elemX, elemY];
-};
+  const coord = e => {
+    let cursX = e.pageX;
+    let cursY = e.pageY;
+    let elemX = elemDragged.x
+      ? elemDragged.x.animVal.value
+      : elemDragged.cx.animVal.value;
+    let elemY = elemDragged.y
+      ? elemDragged.y.animVal.value
+      : elemDragged.cy.animVal.value;
+    return [cursX, cursY, elemX, elemY];
+  };
+  const newPos = e => {
+    let d2 = coord(e);
+    if (elemDragged.cx) {
+      elemDragged.setAttribute("cx", d2[0] - deltaX);
+      elemDragged.setAttribute("cy", d2[1] - deltaY);
+    } else if (elemDragged.x) {
+      elemDragged.setAttribute("x", d2[0] - deltaX);
+      elemDragged.setAttribute("y", d2[1] - deltaY);
+    }
+  };
 
-cir.onmousedown = e => {
-  console.log(coord(e));
-};
+  elem.onmousedown = e => {
+    elemDragged = e.target;
+    let d = coord(e);
+    deltaX = d[0] - d[2];
+    deltaY = d[1] - d[3];
+    svg.onmousemove = e => newPos(e);
+  };
 
-rec.onmousedown = e => {
-  console.log(coord(e));
+  elem.onmouseup = e => {
+    deltaX = 0;
+    deltaY = 0;
+    elemDragged = "";
+    svg.onmousemove = e => {};
+  };
 };
