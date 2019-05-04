@@ -7,3 +7,27 @@ function changePosition(element, elementTop, elementLeft) {
   if (elementLeft !== "same") element.style.left = elementLeft + "px";
 }
 // *********************************************************
+// **************** drag & drop ****************************
+// *********************************************************
+function allowDrop(event) {
+  event.preventDefault();
+}
+function drop(event) {
+  event.preventDefault();
+}
+
+function dragStart(element, event) {
+  CursorY2 = event.pageY;
+  CursorX2 = event.pageX;
+  OldPosition = getPosition(element);
+  DeltaY = CursorY2 - OldPosition[0];
+  DeltaX = CursorX2 - OldPosition[1];
+}
+
+function dragging(element, event) {
+  CursorY = event.pageY;
+  CursorX = event.pageX;
+  NewTop = CursorY - DeltaY;
+  NewLeft = CursorX - DeltaX;
+  changePosition(element, NewTop, NewLeft);
+}
