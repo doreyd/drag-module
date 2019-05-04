@@ -53,4 +53,5 @@ const dragging = (elemId, container = document.body) => {
   container.ondrop = () => drop(event);
   container.ondragover = () => allowDrop(event);
   startDragging(elem);
+  elem.style.cursor = "pointer";
 };
