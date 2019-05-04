@@ -1,15 +1,6 @@
 // This is a module for drag and drop SVG elements
 const dragSVG = elemId => {
-  const getSVGdim = SVGid => {
-    let svg = document.getElementById(SVGid);
-    let svgH = svg.height.animVal.value;
-    let svgW = svg.width.animVal.value;
-    return [svgH, svgW];
-  };
-
   let elem = document.getElementById(elemId);
-
-  let dim = getSVGdim("svg");
 
   let deltaX = 0;
   let deltaY = 0;
