@@ -17,6 +17,7 @@ const dragSVG = elemId => {
       : elemDragged.cy.animVal.value;
     return [cursX, cursY, elemX, elemY];
   };
+
   const newPos = e => {
     let d2 = coord(e);
     if (elemDragged.cx) {

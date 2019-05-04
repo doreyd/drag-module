@@ -28,11 +28,13 @@
         position: absolute;
         top: 0px;
         left: 0px;
+        height: 100%;
+        width: 100%;
       }
     </style>
   </head>
   <body>
-    <svg id="svg" width="1300" height="600">
+    <svg id="svg">
       <circle id="circle" cx="100" cy="100" r="80" fill="green"></circle>
       <rect
         id="rect"
@@ -51,8 +53,10 @@
     <script>
       dragging("a");
       dragging("b");
-      dragSVG("circle");
-      dragSVG("rect");
+      // dragSVG("circle");
+      // dragSVG("rect");
+      const dragSVGgroup = elemGroup => elemGroup.forEach(x => dragSVG(x));
+      dragSVGgroup(["circle", "rect"]);
     </script>
   </body>
 </html>
