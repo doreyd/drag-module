@@ -31,3 +31,15 @@ function dragging(element, event) {
   NewLeft = CursorX - DeltaX;
   changePosition(element, NewTop, NewLeft);
 }
+function startDragging(element) {
+  element.onclick = () => {};
+  element.setAttribute("draggable", "true");
+  element.ondragstart = () => dragStart(element, event);
+  element.ondrag = () => dragging(element, event);
+  element.ondragend = () => {};
+}
+function stopDragging(element) {
+  setNewAttribute(element, "draggable", "false");
+  element.ondragstart = () => {};
+  element.ondrag = () => {};
+}
